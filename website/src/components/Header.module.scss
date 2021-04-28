@@ -1,0 +1,14 @@
+@import 'styles/_scaffold';
+
+.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: $primary;
+  color: $white;
+}
+
+.logo {
+  margin: 0;
+  font-size: 18px;
+  text-transform: uppercase;
+}

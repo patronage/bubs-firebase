@@ -1,0 +1,83 @@
+//
+// set our own variables and override bootstrap ones here.
+// if you need to referene any bootstrap ones, copy from here:
+// https://github.com/twbs/bootstrap/blob/v5.0.0-beta1/scss/_variables.scss
+//
+
+// spacing
+$spacer: 1rem;
+$section-padding: $spacer * 3;
+$section-padding-mobile: $spacer * 1.5;
+
+// type
+$font-sans: 'Source Sans Pro', sans-serif;
+$font-serif: 'Roboto Slab', serif;
+$font-heading: 'Roboto Condensed', sans-serif;
+$font-button: $font-sans;
+$font-thin: 300;
+
+//
+// colors
+//
+
+$white: #fff;
+$black: #000;
+$blue: #00baee;
+$purple: #9145cd;
+$color-email: #138bfd;
+$color-facebook: #3b5998;
+$color-twitter: #55acee;
+// bootstrap theme colors
+// must restate defaults in order to merge in our custom
+$primary: $blue;
+$secondary: $purple;
+$dark: #212529;
+$light: #f8f9fa;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$body-color: #222; // $text-color
+
+// Theme Colors
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'danger': $danger,
+  'light': $light,
+  'dark': $dark,
+);
+$custom-colors: (
+  'papayawhip': papayawhip,
+  'white': white,
+  'black': black,
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+//
+// bootstrap variable overrides
+//
+
+$font-family-sans-serif: $font-sans;
+$font-family-base: $font-serif;
+$headings-font-family: $font-heading;
+$font-size-base: 1rem;
+$line-height-base: 1.5;
+$grid-gutter-width: 30px;
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
+
+// customize grid
+// $container-max-widths: (
+//   sm: 540px,
+//   md: 720px,
+//   lg: 960px,
+//   xl: 1140px,
+//   xxl: 1141px,
+// );

@@ -1,10 +1,10 @@
 import ButtonLoader from 'components/ButtonLoader';
 import {
-  getAuth,
   GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { Field, Form, Formik } from 'formik';
 import firebase from 'lib/firebase';
 import _get from 'lodash/get';
@@ -44,8 +44,8 @@ export default function Register({
       return onNormalLogin();
     }
 
-    firebase.firestore.collection('users').doc(user.uid).set({
-      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+    await setDoc(doc(firebase.firestore, 'users', user.uid), {
+      created_at: serverTimestamp(),
       given_name,
       family_name,
       email_address,
@@ -57,13 +57,12 @@ export default function Register({
   async function handleGoogleRegistration() {
     setIsLoading(true);
 
-    const auth = getAuth();
     const provider = new GoogleAuthProvider();
-    const signin = await signInWithPopup(auth, provider);
+    const signin = await signInWithPopup(firebase.auth, provider);
 
     return await postSuccessfulRegistration(
       signin.user,
-      _get(signin, 'additionalUserInfo.isNewUser'),
+      _get(signin, 'additionalUserInfo.isNewUser', true),
       _get(signin, 'additionalUserInfo.profile.given_name'),
       _get(signin, 'additionalUserInfo.profile.family_name'),
       _get(signin, 'additionalUserInfo.profile.email'),
@@ -79,17 +78,15 @@ export default function Register({
     try {
       setIsLoading(true);
 
-      const {
-        user,
-        additionalUserInfo: { isNewUser },
-      } = await createUserWithEmailAndPassword(
+      const signin = await createUserWithEmailAndPassword(
+        firebase.auth,
         email_address,
         password,
       );
 
       return await postSuccessfulRegistration(
-        user,
-        isNewUser,
+        signin.user,
+        _get(signin, 'additionalUserInfo.isNewUser', true),
         given_name,
         family_name,
         email_address,

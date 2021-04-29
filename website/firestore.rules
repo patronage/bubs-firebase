@@ -5,4 +5,13 @@ service cloud.firestore {
       allow read, write: if false;
     }
   }
+
+  match /databases/{database}/documents/users {
+    match /{userId} {
+      allow create;
+      allow read: if request.auth.uid == userId;
+      allow update: if request.auth.uid == userId;
+      allow write: if request.auth.uid == userId;
+    }
+  }
 }

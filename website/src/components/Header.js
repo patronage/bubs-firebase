@@ -8,8 +8,6 @@ import styles from './Header.module.scss';
 export default function Header() {
   const auth = useContext(AuthContext);
 
-  console.log('auth', auth);
-
   function logout(event) {
     event.preventDefault();
     signOut(firebase.auth);
@@ -26,11 +24,21 @@ export default function Header() {
               </Link>
             </div>
           </div>
-          {auth.loggedIn && (
+          {auth.loggedIn ? (
             <div className="col-4 text-end">
               <a href="#" onClick={logout}>
                 Sign Out
               </a>
+            </div>
+          ) : (
+            <div className="col-4 text-end">
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
+              {' | '}
+              <Link href="/register">
+                <a>Register</a>
+              </Link>
             </div>
           )}
         </div>
